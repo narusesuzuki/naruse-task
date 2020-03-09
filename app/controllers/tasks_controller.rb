@@ -29,10 +29,11 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.html { redirect_to "/tasks", notice: 'タスクが正常に作成されました' }
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new }
+        @tasks = Task.all
+        format.html { render :index }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -43,7 +44,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to @task, notice: 'タスクが正常に更新されました。' }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }
@@ -57,10 +58,11 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to tasks_url, notice: 'タスクが正常に削除されました。' }
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
